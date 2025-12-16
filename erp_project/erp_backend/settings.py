@@ -30,13 +30,14 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+from decouple import config
+from pathlib import Path
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173/",  # Vite frontend
-]
-
-
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    default="localhost,127.0.0.1",
+    cast=lambda v: [h.strip() for h in v.split(",")]
+)
 # Application definition
 
 INSTALLED_APPS = [

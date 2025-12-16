@@ -12,12 +12,6 @@ RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     pkg-config \
     gcc \
-    wkhtmltopdf \
-    xfonts-75dpi \
-    xfonts-base \
-    fontconfig \
-    libxrender1 \
-    libxext6 \
     libssl-dev \
     libffi-dev \
     tzdata \

@@ -15,6 +15,9 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libffi-dev \
     tzdata \
+    wkhtmltopdf \
+    xfonts-75dpi \
+    xfonts-base \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy code

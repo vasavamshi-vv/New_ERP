@@ -1,31 +1,43 @@
-FROM python:3.10-slim
+FROM ubuntu:22.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Kolkata
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV TZ=Asia/Kolkata
 
 WORKDIR /app
 
-# System dependencies
+# Install system dependencies + wkhtmltopdf
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    default-libmysqlclient-dev \
-    pkg-config \
-    gcc \
-    libssl-dev \
-    libffi-dev \
-    tzdata \
+    python3 \
+    python3-pip \
+    python3-dev \
+    python3-venv \
     wkhtmltopdf \
     xfonts-75dpi \
     xfonts-base \
-    && rm -rf /var/lib/apt/lists/*
+    fontconfig \
+    libxrender1 \
+    libxext6 \
+    libssl-dev \
+    libffi-dev \
+    default-libmysqlclient-dev \
+    pkg-config \
+    gcc \
+    build-essential \
+    tzdata \
+    curl && \
+    wkhtmltopdf --version && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy code
+# Copy project files
 COPY . .
 
-# Python dependencies
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r erp_project/require.txt
+# Install Python dependencies (IMPORTANT: require.txt)
+RUN python3 -m pip install --upgrade pip setuptools wheel && \
+    python3 -m pip install --no-cache-dir -r erp_project/require.txt
+
 EXPOSE 8000
 
-CMD ["bash", "-c", "python erp_project/manage.py migrate && python erp_project/manage.py runserver 0.0.0.0:8000"]
+# Run migrations and start Django
+CMD ["bash", "-c", "python3 erp_project/manage.py migrate && python3 erp_project/manage.py runserver 0.0.0.0:8000"]

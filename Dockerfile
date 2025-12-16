@@ -22,8 +22,7 @@ COPY . .
 
 # Python dependencies
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r erp_project/requirements.txt
-
+    pip install --no-cache-dir -r erp_project/require.txt
 EXPOSE 8000
 
 CMD ["bash", "-c", "python erp_project/manage.py migrate && python erp_project/manage.py runserver 0.0.0.0:8000"]

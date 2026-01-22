@@ -107,11 +107,11 @@ WSGI_APPLICATION = 'erp_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'erp_dev_db',
-        'USER': 'admin',
-        'PASSWORD': 'Test@123',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': config('DB_NAME', default='erp_dev_db'),
+        'USER': config('DB_USER', default='admin'),
+        'PASSWORD': config('DB_PASSWORD', default='StacklyVasa'),
+        'HOST': config('DB_HOST', default='erp-qa-db.cvy4we044sft.ap-south-1.rds.amazonaws.com'),
+        'PORT': config('DB_PORT', default='3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',

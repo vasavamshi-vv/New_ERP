@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-
+from pathlib import Path
 from pathlib import Path
 from decouple import config
 import pymysql
@@ -30,13 +30,13 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+from decouple import config
+from pathlib import Path
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  "https://35.154.32.180:3000"
-]
-
-
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    cast=lambda v: [h.strip() for h in v.split(",")]
+)
 # Application definition
 
 INSTALLED_APPS = [
@@ -67,6 +67,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# ======================
+# CORS CONFIGURATION
+# ======================
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'erp_backend.urls'
 
@@ -103,11 +109,11 @@ WSGI_APPLICATION = 'erp_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'erp_dev_db',
-        'USER': 'admin',
-        'PASSWORD': 'Test@123',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', cast=int),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',
@@ -137,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'En-In'
+LANGUAGE_CODE = 'en-In'
 
 TIME_ZONE = 'Asia/Kolkata'
 
@@ -180,7 +186,11 @@ CACHES = {
 }
 
 
-# settings.py 
+
+
+
+
+# settings.py (localhost)
 import os
 
 MEDIA_URL = '/media/'
@@ -191,4 +201,4 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "saibhogadi@thestackly.com"
-EMAIL_HOST_PASSWORD = "onzltnwegrlnawta"  
+EMAIL_HOST_PASSWORD = "onzltnwegrlnawta"  # not your real Gmail password

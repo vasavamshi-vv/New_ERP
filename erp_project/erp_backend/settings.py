@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
+
 from pathlib import Path
 from decouple import config
 import pymysql
@@ -30,14 +30,13 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-from decouple import config
-from pathlib import Path
+ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS",
-    default="localhost,127.0.0.1",
-    cast=lambda v: [h.strip() for h in v.split(",")]
-)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  "https://35.154.32.180:3000"
+]
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -68,9 +67,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Vite dev server
-]
 
 ROOT_URLCONF = 'erp_backend.urls'
 
@@ -141,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-In'
+LANGUAGE_CODE = 'En-In'
 
 TIME_ZONE = 'Asia/Kolkata'
 
@@ -184,11 +180,7 @@ CACHES = {
 }
 
 
-
-
-
-
-# settings.py (localhost)
+# settings.py 
 import os
 
 MEDIA_URL = '/media/'
@@ -199,4 +191,4 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "saibhogadi@thestackly.com"
-EMAIL_HOST_PASSWORD = "onzltnwegrlnawta"  # not your real Gmail password
+EMAIL_HOST_PASSWORD = "onzltnwegrlnawta"  

@@ -35,6 +35,7 @@ from pathlib import Path
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
+    default="localhost,127.0.0.1",
     cast=lambda v: [h.strip() for h in v.split(",")]
 )
 # Application definition
@@ -67,12 +68,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-# ======================
-# CORS CONFIGURATION
-# ======================
-
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Vite dev server
+]
 
 ROOT_URLCONF = 'erp_backend.urls'
 
@@ -109,11 +107,11 @@ WSGI_APPLICATION = 'erp_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', cast=int),
+        'NAME': config('DB_NAME', default='erp_dev_db'),
+        'USER': config('DB_USER', default='admin'),
+        'PASSWORD': config('DB_PASSWORD', default='StacklyVasa'),
+        'HOST': config('DB_HOST', default='erp-qa-db.cvy4we044sft.ap-south-1.rds.amazonaws.com'),
+        'PORT': config('DB_PORT', default='3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',

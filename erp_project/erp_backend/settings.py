@@ -110,7 +110,7 @@ DATABASES = {
         'NAME': config('DB_NAME', default='erp_dev_db'),
         'USER': config('DB_USER', default='admin'),
         'PASSWORD': config('DB_PASSWORD', default='StacklyVasa'),
-        'HOST': config('DB_HOST', default='erp-db.cvy4we044sft.ap-south-1.rds.amazonaws.com),
+        'HOST': config('DB_HOST', default='erp-db.cvy4we044sft.ap-south-1.rds.amazonaws.com'),
         'PORT': config('DB_PORT', default='3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
